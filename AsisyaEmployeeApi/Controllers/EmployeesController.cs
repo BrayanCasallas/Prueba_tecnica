@@ -37,9 +37,9 @@ namespace AsisyaEmployeeApi.Controllers
         public async Task<ActionResult> Post(EmployeeCreateDto dto)
         {
             var created = await _service.CreateAsync(dto);
-
             return CreatedAtAction(nameof(GetEmployee), new { id = created.Id }, created);
         }
+
 
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, EmployeeUpdateDto dto)

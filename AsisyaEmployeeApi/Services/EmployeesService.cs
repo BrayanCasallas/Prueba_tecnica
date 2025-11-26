@@ -16,72 +16,105 @@ namespace AsisyaEmployeeApi.Services
 
         public async Task<List<EmployeeReadDto>> GetAllAsync()
         {
-            return await _context.Employees
-                .Select(e => new EmployeeReadDto
-                {
-                    Id = e.Id,
-                    Name = e.Name,
-                    Position = e.Position
-                })
-                .ToListAsync();
+            try
+            {
+                return await _context.Employees
+                    .Select(e => new EmployeeReadDto
+                    {
+                        Id = e.Id,
+                        Name = e.Name,
+                        Position = e.Position
+                    })
+                    .ToListAsync();
+            }
+            catch
+            {
+                return new List<EmployeeReadDto>();
+            }
         }
 
         public async Task<EmployeeReadDto?> GetByIdAsync(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee == null) return null;
-
-            return new EmployeeReadDto
+            try
             {
-                Id = employee.Id,
-                Name = employee.Name,
-                Position = employee.Position
-            };
+                var employee = await _context.Employees.FindAsync(id);
+                if (employee == null) return null;
+
+                return new EmployeeReadDto
+                {
+                    Id = employee.Id,
+                    Name = employee.Name,
+                    Position = employee.Position
+                };
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public async Task<EmployeeReadDto> CreateAsync(EmployeeCreateDto dto)
         {
-            var employee = new Employee
+            try
             {
-                Name = dto.Name,
-                Position = dto.Position,
-                Salary = dto.Salary
-            };
+                var employee = new Employee
+                {
+                    Name = dto.Name,
+                    Position = dto.Position,
+                    Salary = dto.Salary
+                };
 
-            _context.Employees.Add(employee);
-            await _context.SaveChangesAsync();
+                _context.Employees.Add(employee);
+                await _context.SaveChangesAsync();
 
-            return new EmployeeReadDto
+                return new EmployeeReadDto
+                {
+                    Id = employee.Id,
+                    Name = employee.Name,
+                    Position = employee.Position
+                };
+            }
+            catch
             {
-                Id = employee.Id,
-                Name = employee.Name,
-                Position = employee.Position
-            };
+                throw new Exception("Error creating employee.");
+            }
         }
 
         public async Task<bool> UpdateAsync(EmployeeUpdateDto dto)
         {
-            var employee = await _context.Employees.FindAsync(dto.Id);
-            if (employee == null) return false;
+            try
+            {
+                var employee = await _context.Employees.FindAsync(dto.Id);
+                if (employee == null) return false;
 
-            employee.Name = dto.Name;
-            employee.Position = dto.Position;
-            employee.Salary = dto.Salary;
+                employee.Name = dto.Name;
+                employee.Position = dto.Position;
+                employee.Salary = dto.Salary;
 
-            await _context.SaveChangesAsync();
-            return true;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
+            try
+            {
+                var employee = await _context.Employees.FindAsync(id);
+                if (employee == null) return false;
 
-            if (employee == null)
+                _context.Employees.Remove(employee);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
                 return false;
-
-            _context.Employees.Remove(employee);
-            await _context.SaveChangesAsync();
-            return true;
+            }
         }
     }
 }
