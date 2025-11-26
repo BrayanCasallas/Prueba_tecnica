@@ -1730,11 +1730,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\beto9\\Desktop\\prueba tecnica\\AsisyaEmployeeApi\\AsisyaEmployeeApi.csproj",
+      "projectUniqueName": "C:\\Users\\beto9\\Desktop\\Prueba_tecnica\\AsisyaEmployeeApi\\AsisyaEmployeeApi.csproj",
       "projectName": "AsisyaEmployeeApi",
-      "projectPath": "C:\\Users\\beto9\\Desktop\\prueba tecnica\\AsisyaEmployeeApi\\AsisyaEmployeeApi.csproj",
+      "projectPath": "C:\\Users\\beto9\\Desktop\\Prueba_tecnica\\AsisyaEmployeeApi\\AsisyaEmployeeApi.csproj",
       "packagesPath": "C:\\Users\\beto9\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\beto9\\Desktop\\prueba tecnica\\AsisyaEmployeeApi\\obj\\",
+      "outputPath": "C:\\Users\\beto9\\Desktop\\Prueba_tecnica\\AsisyaEmployeeApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

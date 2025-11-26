@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AsisyaEmployeeApi.Migrations
 {
     [DbContext(typeof(EmployeesDbContext))]
-    [Migration("20251126210458_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251126214421_InitialMigrations")]
+    partial class InitialMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
