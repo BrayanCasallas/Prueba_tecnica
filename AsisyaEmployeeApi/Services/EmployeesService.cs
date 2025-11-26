@@ -23,7 +23,8 @@ namespace AsisyaEmployeeApi.Services
                     {
                         Id = e.Id,
                         Name = e.Name,
-                        Position = e.Position
+                        Position = e.Position,
+                        Salary = e.Salary
                     })
                     .ToListAsync();
             }
@@ -71,7 +72,8 @@ namespace AsisyaEmployeeApi.Services
                 {
                     Id = employee.Id,
                     Name = employee.Name,
-                    Position = employee.Position
+                    Position = employee.Position,
+                    Salary = employee.Salary
                 };
             }
             catch
