@@ -1,4 +1,5 @@
 using AsisyaEmployeeApi.Data;
+using AsisyaEmployeeApi.DTOs;
 using AsisyaEmployeeApi.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,26 +14,60 @@ namespace AsisyaEmployeeApi.Services
             _context = context;
         }
 
-        public async Task<List<Employee>> GetAllAsync()
+        public async Task<List<EmployeeReadDto>> GetAllAsync()
         {
-            return await _context.Employees.ToListAsync();
+            return await _context.Employees
+                .Select(e => new EmployeeReadDto
+                {
+                    Id = e.Id,
+                    Name = e.Name,
+                    Position = e.Position
+                })
+                .ToListAsync();
         }
 
-        public async Task<Employee?> GetByIdAsync(int id)
+        public async Task<EmployeeReadDto?> GetByIdAsync(int id)
         {
-            return await _context.Employees.FindAsync(id);
+            var employee = await _context.Employees.FindAsync(id);
+            if (employee == null) return null;
+
+            return new EmployeeReadDto
+            {
+                Id = employee.Id,
+                Name = employee.Name,
+                Position = employee.Position
+            };
         }
 
-        public async Task<Employee> CreateAsync(Employee employee)
+        public async Task<EmployeeReadDto> CreateAsync(EmployeeCreateDto dto)
         {
+            var employee = new Employee
+            {
+                Name = dto.Name,
+                Position = dto.Position,
+                Salary = dto.Salary
+            };
+
             _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
-            return employee;
+
+            return new EmployeeReadDto
+            {
+                Id = employee.Id,
+                Name = employee.Name,
+                Position = employee.Position
+            };
         }
 
-        public async Task<bool> UpdateAsync(Employee employee)
+        public async Task<bool> UpdateAsync(EmployeeUpdateDto dto)
         {
-            _context.Entry(employee).State = EntityState.Modified;
+            var employee = await _context.Employees.FindAsync(dto.Id);
+            if (employee == null) return false;
+
+            employee.Name = dto.Name;
+            employee.Position = dto.Position;
+            employee.Salary = dto.Salary;
+
             await _context.SaveChangesAsync();
             return true;
         }

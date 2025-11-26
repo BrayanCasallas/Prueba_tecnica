@@ -1,4 +1,4 @@
-using AsisyaEmployeeApi.Models;
+using AsisyaEmployeeApi.DTOs;
 using AsisyaEmployeeApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +15,6 @@ namespace AsisyaEmployeeApi.Controllers
             _service = service;
         }
 
-        // GET api/employees
         [HttpGet]
         public async Task<ActionResult> GetEmployees()
         {
@@ -23,7 +22,6 @@ namespace AsisyaEmployeeApi.Controllers
             return Ok(employees);
         }
 
-        // GET api/employees/5
         [HttpGet("{id}")]
         public async Task<ActionResult> GetEmployee(int id)
         {
@@ -35,27 +33,28 @@ namespace AsisyaEmployeeApi.Controllers
             return Ok(employee);
         }
 
-        // POST api/employees
         [HttpPost]
-        public async Task<ActionResult> Post(Employee employee)
+        public async Task<ActionResult> Post(EmployeeCreateDto dto)
         {
-            var created = await _service.CreateAsync(employee);
+            var created = await _service.CreateAsync(dto);
 
             return CreatedAtAction(nameof(GetEmployee), new { id = created.Id }, created);
         }
 
-        // PUT api/employees/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, Employee employee)
+        public async Task<ActionResult> Put(int id, EmployeeUpdateDto dto)
         {
-            if (id != employee.Id)
+            if (id != dto.Id)
                 return BadRequest();
 
-            await _service.UpdateAsync(employee);
+            var updated = await _service.UpdateAsync(dto);
+
+            if (!updated)
+                return NotFound();
+
             return Ok();
         }
 
-        // DELETE api/employees/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
