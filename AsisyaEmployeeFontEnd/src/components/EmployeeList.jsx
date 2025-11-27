@@ -21,20 +21,24 @@ export default function EmployeeList() {
     salary: "",
   });
 
+  // Load employees on first render
   useEffect(() => {
     loadEmployees();
   }, []);
 
+  // Fetch employee list from API
   const loadEmployees = async () => {
     const data = await getEmployees();
     setEmployees(data);
   };
 
+  // Delete an employee
   const handleDelete = async (id) => {
     await deleteEmployee(id);
     loadEmployees();
   };
 
+  // Enable edit mode for a specific employee
   const startEdit = (emp) => {
     setEditingId(emp.id);
     setEditData({
@@ -46,21 +50,22 @@ export default function EmployeeList() {
     setErrors({ name: "", position: "", salary: "" });
   };
 
+  // Validate input fields
   const validate = () => {
     let err = { name: "", position: "", salary: "" };
     let ok = true;
 
-    if (!editData.name.trim())
-      (err.name = "El nombre es obligatorio"), (ok = false);
+    if (!editData.name.trim()) (err.name = "Name is required"), (ok = false);
     if (!editData.position.trim())
-      (err.position = "El cargo es obligatorio"), (ok = false);
+      (err.position = "Position is required"), (ok = false);
     if (Number(editData.salary) <= 0)
-      (err.salary = "El salario debe ser mayor a 0"), (ok = false);
+      (err.salary = "Salary must be greater than 0"), (ok = false);
 
     setErrors(err);
     return ok;
   };
 
+  // Save updated employee
   const handleSave = async () => {
     if (!validate()) return;
 
@@ -69,20 +74,21 @@ export default function EmployeeList() {
     loadEmployees();
   };
 
+  // Cancel editing mode
   const handleCancel = () => setEditingId(null);
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">📋 Lista de Empleados</h2>
+      <h2 className="text-2xl font-bold mb-4">📋 Employee List</h2>
 
       <div className="overflow-x-auto rounded-lg shadow">
         <table className="table table-zebra w-full">
           <thead className="bg-base-200">
             <tr>
-              <th>Nombre</th>
-              <th>Cargo</th>
-              <th>Salario</th>
-              <th className="text-center">Acciones</th>
+              <th>Name</th>
+              <th>Position</th>
+              <th>Salary</th>
+              <th className="text-center">Actions</th>
             </tr>
           </thead>
 
@@ -91,6 +97,7 @@ export default function EmployeeList() {
               <tr key={e.id}>
                 {editingId === e.id ? (
                   <>
+                    {/* Name input */}
                     <td>
                       <input
                         className="input input-bordered w-full"
@@ -106,6 +113,7 @@ export default function EmployeeList() {
                       )}
                     </td>
 
+                    {/* Position input */}
                     <td>
                       <input
                         className="input input-bordered w-full"
@@ -124,6 +132,7 @@ export default function EmployeeList() {
                       )}
                     </td>
 
+                    {/* Salary input */}
                     <td>
                       <input
                         type="number"
@@ -140,44 +149,47 @@ export default function EmployeeList() {
                       )}
                     </td>
 
+                    {/* Save and cancel buttons */}
                     <td className="flex gap-2 justify-center">
                       <button
                         className="btn btn-success btn-sm"
                         onClick={handleSave}
                       >
-                        💾 Guardar
+                        💾 Save
                       </button>
                       <button
                         className="btn btn-warning btn-sm"
                         onClick={handleCancel}
                       >
-                        ✖ Cancelar
+                        ✖ Cancel
                       </button>
                     </td>
                   </>
                 ) : (
                   <>
+                    {/* Normal (non-editing) display */}
                     <td>{e.name}</td>
                     <td>{e.position}</td>
                     <td className="font-semibold">
-                      {new Intl.NumberFormat("es-CO", {
+                      {new Intl.NumberFormat("en-US", {
                         style: "currency",
-                        currency: "COP",
+                        currency: "USD",
                       }).format(e.salary)}
                     </td>
 
+                    {/* Buttons */}
                     <td className="flex gap-2 justify-center">
                       <button
                         className="btn btn-info btn-sm"
                         onClick={() => startEdit(e)}
                       >
-                        ✏ Editar
+                        ✏ Edit
                       </button>
                       <button
                         className="btn btn-error btn-sm"
                         onClick={() => handleDelete(e.id)}
                       >
-                        🗑 Eliminar
+                        🗑 Delete
                       </button>
                     </td>
                   </>

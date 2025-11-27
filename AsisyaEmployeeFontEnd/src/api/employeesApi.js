@@ -1,35 +1,24 @@
-// src/api/employeesApi.js
-const BASE_URL = import.meta.env.VITE_API_URL;
+import axios from "axios";
 
-const API_URL = `${BASE_URL}/employees`;
+const api = axios.create({
+  baseURL: "http://localhost:7001/api/employees",
+  timeout: 3000,
+});
 
-export const getEmployees = async () => {
-  const res = await fetch(API_URL);
-  return res.json();
-};
+// Get all employees
+export const getEmployees = () => api.get("/").then((res) => res.data);
 
-export const getEmployeeById = async (id) => {
-  const res = await fetch(`${API_URL}/${id}`);
-  return res.json();
-};
+// Get employee by ID
+export const getEmployeeById = (id) =>
+  api.get(`/${id}`).then((res) => res.data);
 
-export const createEmployee = async (employee) => {
-  const res = await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(employee),
-  });
-  return res.json();
-};
+// Create new employee
+export const createEmployee = (employee) =>
+  api.post("/", employee).then((res) => res.data);
 
-export const updateEmployee = async (employee) => {
-  await fetch(`${API_URL}/${employee.id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(employee),
-  });
-};
+// Update employee
+export const updateEmployee = (employee) =>
+  api.put(`/${employee.id}`, employee).then((res) => res.data);
 
-export const deleteEmployee = async (id) => {
-  await fetch(`${API_URL}/${id}`, { method: "DELETE" });
-};
+// Delete employee
+export const deleteEmployee = (id) => api.delete(`/${id}`);

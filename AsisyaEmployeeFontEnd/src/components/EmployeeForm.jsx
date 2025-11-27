@@ -1,23 +1,25 @@
 import { useState } from "react";
 import { createEmployee } from "../api/employeesApi";
 
-// Formulario para crear un empleado usando DaisyUI + Tailwind
+// Form to create a new employee using DaisyUI + Tailwind
 export default function EmployeeForm({ onCreated }) {
   const [form, setForm] = useState({ name: "", position: "", salary: "" });
   const [error, setError] = useState("");
 
+  // Show error message temporarily
   const showError = (msg) => {
     setError(msg);
     setTimeout(() => setError(""), 1500);
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!form.name.trim()) return showError("❗ El nombre es obligatorio");
-    if (!form.position.trim()) return showError("❗ El cargo es obligatorio");
+    if (!form.name.trim()) return showError("❗ Name is required");
+    if (!form.position.trim()) return showError("❗ Position is required");
     if (form.salary === "" || Number(form.salary) <= 0)
-      return showError("❗ El salario debe ser mayor a 0");
+      return showError("❗ Salary must be greater than 0");
 
     await createEmployee(form);
     setForm({ name: "", position: "", salary: "" });
@@ -26,11 +28,9 @@ export default function EmployeeForm({ onCreated }) {
 
   return (
     <div className="max-w-md mx-auto p-4 rounded-lg shadow-md bg-base-200">
-      <h2 className="text-xl font-bold text-center mb-4">
-        Agregar nuevo empleado
-      </h2>
+      <h2 className="text-xl font-bold text-center mb-4">Add New Employee</h2>
 
-      {/* Mensaje de error */}
+      {/* Error message */}
       {error && (
         <div className="alert alert-error text-white font-medium mb-3 py-2">
           {error}
@@ -38,45 +38,45 @@ export default function EmployeeForm({ onCreated }) {
       )}
 
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-        {/* Nombre */}
+        {/* Name */}
         <label className="form-control w-full">
-          <span className="label-text font-medium">Nombre</span>
+          <span className="label-text font-medium">Name</span>
           <input
             type="text"
-            placeholder="Ej: Juan Pérez"
+            placeholder="Ex: John Doe"
             className="input input-bordered w-full"
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
           />
         </label>
 
-        {/* Cargo */}
+        {/* Position */}
         <label className="form-control w-full">
-          <span className="label-text font-medium">Cargo</span>
+          <span className="label-text font-medium">Position</span>
           <input
             type="text"
-            placeholder="Ej: Administrador"
+            placeholder="Ex: Administrator"
             className="input input-bordered w-full"
             value={form.position}
             onChange={(e) => setForm({ ...form, position: e.target.value })}
           />
         </label>
 
-        {/* Salario */}
+        {/* Salary */}
         <label className="form-control w-full">
-          <span className="label-text font-medium">Salario (COP)</span>
+          <span className="label-text font-medium">Salary (COP)</span>
           <input
             type="number"
-            placeholder="Ej: 2500000"
+            placeholder="Ex: 2500000"
             className="input input-bordered w-full"
             value={form.salary}
             onChange={(e) => setForm({ ...form, salary: e.target.value })}
           />
         </label>
 
-        {/* Botón */}
+        {/* Button */}
         <button className="btn btn-primary mt-2" type="submit">
-          Guardar empleado
+          Save Employee
         </button>
       </form>
     </div>
