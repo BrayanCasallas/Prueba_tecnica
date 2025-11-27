@@ -3,9 +3,9 @@ import EmployeeForm from "../components/EmployeeForm";
 
 export default function EmployeesPage() {
   return (
-    <div>
+    <div className="p-5 flex flex-col gap-5">
+      <h1 className="text-4xl">Gestión de Empleados</h1>
       <EmployeeList />
-      <h1>Gestión de Empleados</h1>
       <EmployeeForm onCreated={() => window.location.reload()} />
     </div>
   );
