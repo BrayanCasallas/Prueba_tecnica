@@ -72,12 +72,11 @@ dotnet run
 
 ### 5. API will be available at:
 
-    https://localhost:7046
-    http://localhost:5046
+    http://localhost:7001
 
 ### 6. Swagger Documentation:
 
-    https://localhost:7046/swagger
+    https://localhost:7001/swagger
 
 ---
 
@@ -150,7 +149,7 @@ npm run dev
 
 ### 4. Frontend will run at:
 
-    http://localhost:5173
+    http://localhost:7000
 
 ---
 
