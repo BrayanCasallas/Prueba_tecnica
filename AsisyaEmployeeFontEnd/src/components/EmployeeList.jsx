@@ -19,12 +19,19 @@ export default function EmployeeList() {
   };
 
   return (
-    <div>
+    <div className="">
       <h2>Lista de Empleados</h2>
+
+      {/* Encabezado */}
+      <p>
+        <strong>Nombre</strong> | <strong>Cargo</strong> |{" "}
+        <strong>Salario</strong>
+      </p>
+
       <ul>
         {employees.map((e) => (
           <li key={e.id}>
-            {e.name} - {e.position} - {e.salary}
+            {e.name} | {e.position} | {e.salary}
             <button onClick={() => handleDelete(e.id)}>Eliminar</button>
           </li>
         ))}
