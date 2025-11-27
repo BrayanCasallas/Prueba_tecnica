@@ -1,4 +1,3 @@
-// src/components/EmployeeList.jsx
 import { useEffect, useState } from "react";
 import { getEmployees, deleteEmployee } from "../api/employeesApi";
 
