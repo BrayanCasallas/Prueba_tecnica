@@ -1,14 +1,7 @@
 {
   "compilerOptions": {
-    /* ============================================================
-       📁 Organización de archivos
-    ============================================================ */
     "rootDir": "./src",
     "outDir": "./dist",
-
-    /* ============================================================
-       🔧 Configuración de compilación
-    ============================================================ */
     "module": "ESNext",
     "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
@@ -16,33 +9,24 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
-
-    /* ============================================================
-       ⚛️ JSX para React
-    ============================================================ */
     "jsx": "react-jsx",
-
-    /* ============================================================
-       🦺 Reglas de TypeScript
-    ============================================================ */
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
     "skipLibCheck": true,
     "isolatedModules": true,
     "forceConsistentCasingInFileNames": true,
-
-    /* ============================================================
-       🧪 Archivos de declaración
-    ============================================================ */
     "sourceMap": true,
     "declaration": false,
-    "declarationMap": false
-  },
+    "declarationMap": false,
 
-  /* ============================================================
-     📌 Incluir y excluir rutas
-  ============================================================ */
+    "baseUrl": "./src",
+    "paths": {
+      "@api/*": ["api/*"],
+      "@interfaces/*": ["interfaces/*"],
+      "@components/*": ["components/*"]
+    }
+  },
   "include": ["src"],
   "exclude": ["node_modules"]
 }

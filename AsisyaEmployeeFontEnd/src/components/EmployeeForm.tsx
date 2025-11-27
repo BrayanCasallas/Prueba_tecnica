@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import { createEmployee } from "../api/employeesApi";
+import { createEmployee } from "@api/employeesApi";
 
-import { EmployeeFormProps, EmployeeInput } from "../interfaces/Iemployees";
+import { EmployeeFormProps, EmployeeInput } from "@interfaces/Iemployees";
 
 export default function EmployeeForm({ onCreated }: EmployeeFormProps) {
   const [form, setForm] = useState<EmployeeInput>({

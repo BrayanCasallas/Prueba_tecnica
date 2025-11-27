@@ -111,14 +111,15 @@ DELETE /api/employees/{id} Remove employee
     │   │   └── react.svg
     │   │
     │   ├── components/                # Reusable UI components
-    │   │   ├── EmployeeForm.jsx       # Form to create employees
-    │   │   └── EmployeeList.jsx       # Table to list, edit, delete employees
-    │   │
+    │   │   ├── EmployeeForm.tsx       # Form to create employees
+    │   │   └── EmployeeList.tsx       # Table to list, edit, delete employees
+            interfaces/
+    │   │   └── Iemployees.ts          # It contains interfaces for the components
     │   ├── pages/
-    │   │   └── EmployeesPage.jsx      # Main employee management page
+    │   │   └── EmployeesPage.tsx      # Main employee management page
     │   │
-    │   ├── App.jsx                    # Main application wrapper
-    │   ├── main.jsx                   # Entry point for React
+    │   ├── App.tsx                    # Main application wrapper
+    │   ├── main.tsx                   # Entry point for React
     │   └── index.css                  # Global styles
     │
     ├── index.html

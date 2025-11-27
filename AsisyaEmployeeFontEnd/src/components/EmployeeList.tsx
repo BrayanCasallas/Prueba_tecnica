@@ -3,15 +3,13 @@ import {
   getEmployees,
   deleteEmployee,
   updateEmployee,
-} from "../api/employeesApi";
+} from "@api/employeesApi";
 
 import type {
   Employee,
   EmployeeInput,
   EmployeeFormErrors,
-} from "../interfaces/Iemployees";
-// ---------- Types ----------
-
+} from "@interfaces/Iemployees";
 // ---------- Component ----------
 export default function EmployeeList() {
   // Employees array

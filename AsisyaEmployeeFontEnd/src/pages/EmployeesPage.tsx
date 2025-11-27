@@ -1,5 +1,5 @@
-import EmployeeList from "../components/EmployeeList";
-import EmployeeForm from "../components/EmployeeForm";
+import EmployeeList from "@components/EmployeeList";
+import EmployeeForm from "@components/EmployeeForm";
 
 export default function EmployeesPage() {
   return (
