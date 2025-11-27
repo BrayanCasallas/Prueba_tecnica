@@ -5,54 +5,79 @@ import {
   updateEmployee,
 } from "../api/employeesApi";
 
+// ---------- Types ----------
+interface Employee {
+  id: number;
+  name: string;
+  position: string;
+  salary: number;
+}
+
+interface EditForm {
+  name: string;
+  position: string;
+  salary: string | number;
+}
+
+interface ErrorForm {
+  name: string;
+  position: string;
+  salary: string;
+}
+
+// ---------- Component ----------
 export default function EmployeeList() {
-  const [employees, setEmployees] = useState([]);
-  const [editingId, setEditingId] = useState(null);
+  // Employees array
+  const [employees, setEmployees] = useState<Employee[]>([]);
 
-  const [editData, setEditData] = useState({
+  // Employee currently being edited
+  const [editingId, setEditingId] = useState<number | null>(null);
+
+  // Editing form values
+  const [editData, setEditData] = useState<EditForm>({
     name: "",
     position: "",
     salary: "",
   });
 
-  const [errors, setErrors] = useState({
+  // Validation errors
+  const [errors, setErrors] = useState<ErrorForm>({
     name: "",
     position: "",
     salary: "",
   });
 
-  // Load employees on first render
+  // Load employees first time
   useEffect(() => {
     loadEmployees();
   }, []);
 
-  // Fetch employee list from API
+  // 🔹 Fetch employee list
   const loadEmployees = async () => {
     const data = await getEmployees();
     setEmployees(data);
   };
 
-  // Delete an employee
-  const handleDelete = async (id) => {
+  // 🔹 Delete employee
+  const handleDelete = async (id: number) => {
     await deleteEmployee(id);
     loadEmployees();
   };
 
-  // Enable edit mode for a specific employee
-  const startEdit = (emp) => {
+  // 🔹 Enter edit mode
+  const startEdit = (emp: Employee) => {
     setEditingId(emp.id);
     setEditData({
       name: emp.name,
       position: emp.position,
       salary: emp.salary,
     });
-
     setErrors({ name: "", position: "", salary: "" });
   };
 
-  // Validate input fields
+  // 🔹 Validate fields
   const validate = () => {
-    let err = { name: "", position: "", salary: "" };
+    let err: ErrorForm = { name: "", position: "", salary: "" };
     let ok = true;
 
     if (!editData.name.trim()) (err.name = "Name is required"), (ok = false);
@@ -65,16 +90,15 @@ export default function EmployeeList() {
     return ok;
   };
 
-  // Save updated employee
+  // 🔹 Save edited employee
   const handleSave = async () => {
     if (!validate()) return;
-
-    await updateEmployee({ id: editingId, ...editData });
+    await updateEmployee({ id: editingId!, ...editData });
     setEditingId(null);
     loadEmployees();
   };
 
-  // Cancel editing mode
+  // 🔹 Cancel edit mode
   const handleCancel = () => setEditingId(null);
 
   return (
@@ -149,7 +173,7 @@ export default function EmployeeList() {
                       )}
                     </td>
 
-                    {/* Save and cancel buttons */}
+                    {/* Save + Cancel */}
                     <td className="flex gap-2 justify-center">
                       <button
                         className="btn btn-success btn-sm"
@@ -167,7 +191,7 @@ export default function EmployeeList() {
                   </>
                 ) : (
                   <>
-                    {/* Normal (non-editing) display */}
+                    {/* Normal view */}
                     <td>{e.name}</td>
                     <td>{e.position}</td>
                     <td className="font-semibold">
@@ -177,7 +201,6 @@ export default function EmployeeList() {
                       }).format(e.salary)}
                     </td>
 
-                    {/* Buttons */}
                     <td className="flex gap-2 justify-center">
                       <button
                         className="btn btn-info btn-sm"

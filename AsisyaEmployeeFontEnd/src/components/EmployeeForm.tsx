@@ -1,19 +1,33 @@
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { createEmployee } from "../api/employeesApi";
 
-// Form to create a new employee using DaisyUI + Tailwind
-export default function EmployeeForm({ onCreated }) {
-  const [form, setForm] = useState({ name: "", position: "", salary: "" });
-  const [error, setError] = useState("");
+interface EmployeeFormProps {
+  onCreated: () => void;
+}
 
-  // Show error message temporarily
-  const showError = (msg) => {
+interface EmployeeFormState {
+  name: string;
+  position: string;
+  salary: number | string;
+}
+
+export default function EmployeeForm({ onCreated }: EmployeeFormProps) {
+  const [form, setForm] = useState<EmployeeFormState>({
+    name: "",
+    position: "",
+    salary: "",
+  });
+
+  const [error, setError] = useState<string>("");
+
+  // Show temporary error message
+  const showError = (msg: string) => {
     setError(msg);
     setTimeout(() => setError(""), 1500);
   };
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
+  // Form submit handling with typings
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!form.name.trim()) return showError("❗ Name is required");
@@ -21,16 +35,27 @@ export default function EmployeeForm({ onCreated }) {
     if (form.salary === "" || Number(form.salary) <= 0)
       return showError("❗ Salary must be greater than 0");
 
-    await createEmployee(form);
+    await createEmployee({
+      name: form.name,
+      position: form.position,
+      salary: Number(form.salary),
+    });
+
     setForm({ name: "", position: "", salary: "" });
     onCreated();
+  };
+
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    field: keyof EmployeeFormState
+  ) => {
+    setForm({ ...form, [field]: e.target.value });
   };
 
   return (
     <div className="max-w-md mx-auto p-4 rounded-lg shadow-md bg-base-200">
       <h2 className="text-xl font-bold text-center mb-4">Add New Employee</h2>
 
-      {/* Error message */}
       {error && (
         <div className="alert alert-error text-white font-medium mb-3 py-2">
           {error}
@@ -46,7 +71,7 @@ export default function EmployeeForm({ onCreated }) {
             placeholder="Ex: John Doe"
             className="input input-bordered w-full"
             value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            onChange={(e) => handleInputChange(e, "name")}
           />
         </label>
 
@@ -58,7 +83,7 @@ export default function EmployeeForm({ onCreated }) {
             placeholder="Ex: Administrator"
             className="input input-bordered w-full"
             value={form.position}
-            onChange={(e) => setForm({ ...form, position: e.target.value })}
+            onChange={(e) => handleInputChange(e, "position")}
           />
         </label>
 
@@ -70,11 +95,10 @@ export default function EmployeeForm({ onCreated }) {
             placeholder="Ex: 2500000"
             className="input input-bordered w-full"
             value={form.salary}
-            onChange={(e) => setForm({ ...form, salary: e.target.value })}
+            onChange={(e) => handleInputChange(e, "salary")}
           />
         </label>
 
-        {/* Button */}
         <button className="btn btn-primary mt-2" type="submit">
           Save Employee
         </button>
