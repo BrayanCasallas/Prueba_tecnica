@@ -60,7 +60,7 @@ export default function EmployeeForm({ onCreated }: EmployeeFormProps) {
           <span className="label-text font-medium">Name</span>
           <input
             type="text"
-            placeholder="Ex: John Doe"
+            placeholder="Ex: Brayan Casallas"
             className="input input-bordered w-full"
             value={form.name}
             onChange={(e) => handleInputChange(e, "name")}
