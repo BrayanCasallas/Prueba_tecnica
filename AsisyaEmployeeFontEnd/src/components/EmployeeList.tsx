@@ -5,25 +5,12 @@ import {
   updateEmployee,
 } from "../api/employeesApi";
 
+import type {
+  Employee,
+  EmployeeInput,
+  EmployeeFormErrors,
+} from "../interfaces/Iemployees";
 // ---------- Types ----------
-interface Employee {
-  id: number;
-  name: string;
-  position: string;
-  salary: number;
-}
-
-interface EditForm {
-  name: string;
-  position: string;
-  salary: string | number;
-}
-
-interface ErrorForm {
-  name: string;
-  position: string;
-  salary: string;
-}
 
 // ---------- Component ----------
 export default function EmployeeList() {
@@ -34,14 +21,14 @@ export default function EmployeeList() {
   const [editingId, setEditingId] = useState<number | null>(null);
 
   // Editing form values
-  const [editData, setEditData] = useState<EditForm>({
+  const [editData, setEditData] = useState<EmployeeInput>({
     name: "",
     position: "",
     salary: "",
   });
 
   // Validation errors
-  const [errors, setErrors] = useState<ErrorForm>({
+  const [errors, setErrors] = useState<EmployeeFormErrors>({
     name: "",
     position: "",
     salary: "",
@@ -77,7 +64,7 @@ export default function EmployeeList() {
 
   // 🔹 Validate fields
   const validate = () => {
-    let err: ErrorForm = { name: "", position: "", salary: "" };
+    let err: EmployeeFormErrors = { name: "", position: "", salary: "" };
     let ok = true;
 
     if (!editData.name.trim()) (err.name = "Name is required"), (ok = false);

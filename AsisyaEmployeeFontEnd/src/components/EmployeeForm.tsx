@@ -1,18 +1,10 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { createEmployee } from "../api/employeesApi";
 
-interface EmployeeFormProps {
-  onCreated: () => void;
-}
-
-interface EmployeeFormState {
-  name: string;
-  position: string;
-  salary: number | string;
-}
+import { EmployeeFormProps, EmployeeInput } from "../interfaces/Iemployees";
 
 export default function EmployeeForm({ onCreated }: EmployeeFormProps) {
-  const [form, setForm] = useState<EmployeeFormState>({
+  const [form, setForm] = useState<EmployeeInput>({
     name: "",
     position: "",
     salary: "",
@@ -47,7 +39,7 @@ export default function EmployeeForm({ onCreated }: EmployeeFormProps) {
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement>,
-    field: keyof EmployeeFormState
+    field: keyof EmployeeInput
   ) => {
     setForm({ ...form, [field]: e.target.value });
   };
