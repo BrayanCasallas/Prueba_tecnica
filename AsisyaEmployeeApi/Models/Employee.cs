@@ -7,5 +7,7 @@ namespace AsisyaEmployeeApi.Models
         public string Name { get; set; } = string.Empty; // Name of the employee
         public string Position { get; set; } = string.Empty; // Employee's job title or role
         public decimal Salary { get; set; } // Salary assigned to the employee
+
+        public decimal Document { get; set; }
     }
 }

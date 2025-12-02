@@ -23,6 +23,7 @@ export default function EmployeeList() {
     name: "",
     position: "",
     salary: "",
+    document: "",
   });
 
   // Validation errors
@@ -56,13 +57,19 @@ export default function EmployeeList() {
       name: emp.name,
       position: emp.position,
       salary: emp.salary,
+      document: emp.document,
     });
-    setErrors({ name: "", position: "", salary: "" });
+    setErrors({ name: "", position: "", salary: "", document: "" });
   };
 
   // 🔹 Validate fields
   const validate = () => {
-    let err: EmployeeFormErrors = { name: "", position: "", salary: "" };
+    let err: EmployeeFormErrors = {
+      name: "",
+      position: "",
+      salary: "",
+      document: "",
+    };
     let ok = true;
 
     if (!editData.name.trim()) (err.name = "Name is required"), (ok = false);
@@ -96,6 +103,7 @@ export default function EmployeeList() {
             <tr>
               <th>Name</th>
               <th>Position</th>
+              <th>Document</th>
               <th>Salary</th>
               <th className="text-center">Actions</th>
             </tr>
@@ -140,7 +148,24 @@ export default function EmployeeList() {
                         </p>
                       )}
                     </td>
-
+                    <td>
+                      <input
+                        type="number"
+                        className="input input-bordered w-full"
+                        value={editData.document}
+                        onChange={(ev) =>
+                          setEditData({
+                            ...editData,
+                            document: ev.target.value,
+                          })
+                        }
+                      />
+                      {errors.document && (
+                        <p className="text-red-500 text-xs font-semibold">
+                          {errors.document}
+                        </p>
+                      )}
+                    </td>
                     {/* Salary input */}
                     <td>
                       <input
@@ -179,6 +204,7 @@ export default function EmployeeList() {
                     {/* Normal view */}
                     <td>{e.name}</td>
                     <td>{e.position}</td>
+                    <td>{e.document}</td>
                     <td className="font-semibold">
                       {new Intl.NumberFormat("en-US", {
                         style: "currency",

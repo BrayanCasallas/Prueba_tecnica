@@ -7,6 +7,7 @@ export interface EmployeeInput {
   name: string;
   position: string;
   salary: number | string;
+  document: string;
 }
 
 export interface Employee {
@@ -14,10 +15,12 @@ export interface Employee {
   name: string;
   position: string;
   salary: number;
+  document: string;
 }
 
 export interface EmployeeFormErrors {
   name?: string;
   position?: string;
   salary?: string;
+  document?: string;
 }

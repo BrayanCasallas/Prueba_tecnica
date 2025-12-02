@@ -8,6 +8,7 @@ export default function EmployeeForm({ onCreated }: EmployeeFormProps) {
     name: "",
     position: "",
     salary: "",
+    document: "",
   });
 
   const [error, setError] = useState<string>("");
@@ -24,16 +25,16 @@ export default function EmployeeForm({ onCreated }: EmployeeFormProps) {
 
     if (!form.name.trim()) return showError("❗ Name is required");
     if (!form.position.trim()) return showError("❗ Position is required");
+    if (!form.document.trim()) return showError("❗document is required");
     if (form.salary === "" || Number(form.salary) <= 0)
       return showError("❗ Salary must be greater than 0");
-
     await createEmployee({
       name: form.name,
       position: form.position,
       salary: Number(form.salary),
     });
 
-    setForm({ name: "", position: "", salary: "" });
+    setForm({ name: "", position: "", salary: "", document: "" });
     onCreated();
   };
 
@@ -76,6 +77,16 @@ export default function EmployeeForm({ onCreated }: EmployeeFormProps) {
             className="input input-bordered w-full"
             value={form.position}
             onChange={(e) => handleInputChange(e, "position")}
+          />
+        </label>
+        <label className="form-control w-full">
+          <span className="label-text font-medium">Document</span>
+          <input
+            type="number"
+            placeholder="Ex: 1324658"
+            className="input input-bordered w-full"
+            value={form.document}
+            onChange={(e) => handleInputChange(e, "document")}
           />
         </label>
 

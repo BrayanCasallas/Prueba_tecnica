@@ -7,5 +7,6 @@ namespace AsisyaEmployeeApi.DTOs
         public string Name { get; set; } = string.Empty; // Updated name value
         public string Position { get; set; } = string.Empty; // Updated job title or role
         public decimal Salary { get; set; } // Updated salary amount
+        public decimal Document { get; set; }
     }
 }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AsisyaEmployeeApi.Migrations
 {
     [DbContext(typeof(EmployeesDbContext))]
-    [Migration("20251126214421_InitialMigrations")]
-    partial class InitialMigrations
+    [Migration("20251202224959_AddDocumentColumn")]
+    partial class AddDocumentColumn
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,9 @@ namespace AsisyaEmployeeApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Document")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()

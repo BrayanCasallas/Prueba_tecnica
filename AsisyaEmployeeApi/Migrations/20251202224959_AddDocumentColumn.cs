@@ -5,7 +5,7 @@
 namespace AsisyaEmployeeApi.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigrations : Migration
+    public partial class AddDocumentColumn : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +18,8 @@ namespace AsisyaEmployeeApi.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Position = table.Column<string>(type: "TEXT", nullable: false),
-                    Salary = table.Column<decimal>(type: "TEXT", nullable: false)
+                    Salary = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Document = table.Column<decimal>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -26,11 +26,12 @@ namespace AsisyaEmployeeApi.Services
                         Id = e.Id,
                         Name = e.Name,
                         Position = e.Position,
-                        Salary = e.Salary
+                        Salary = e.Salary,
+                        Document = e.Document
                     })
-                    .ToListAsync(); // Async enumeration from the database
+                    .ToListAsync();
             }
-            catch
+            catch (Exception)
             {
                 return new List<EmployeeReadDto>(); // Fallback in case of database failure
             }
@@ -41,20 +42,21 @@ namespace AsisyaEmployeeApi.Services
         {
             try
             {
-                var employee = await _context.Employees.FindAsync(id); // Searches by primary key
-                if (employee == null) return null; // Returns null if employee not found
+                var employee = await _context.Employees.FindAsync(id);
+                if (employee == null) return null;
 
                 return new EmployeeReadDto
                 {
                     Id = employee.Id,
                     Name = employee.Name,
-                    Position = employee.Position
-                    // Salary not included here (can be added if necessary)
+                    Position = employee.Position,
+                    Salary = employee.Salary,   // ✔️ Error corregido
+                    Document = employee.Document
                 };
             }
-            catch
+            catch (Exception)
             {
-                return null; // Fallback if exception occurs
+                return null;
             }
         }
 
@@ -67,62 +69,65 @@ namespace AsisyaEmployeeApi.Services
                 {
                     Name = dto.Name,
                     Position = dto.Position,
-                    Salary = dto.Salary
+                    Salary = dto.Salary,
+                    Document = dto.Document
                 };
 
-                _context.Employees.Add(employee); // Adds new employee to tracking
-                await _context.SaveChangesAsync(); // Persists data to database
+                _context.Employees.Add(employee);
+                await _context.SaveChangesAsync();
 
                 return new EmployeeReadDto
                 {
                     Id = employee.Id,
                     Name = employee.Name,
                     Position = employee.Position,
-                    Salary = employee.Salary
+                    //Salary = employee.Salary,
+                    Document = employee.Document
                 };
             }
-            catch
+            catch (Exception ex)
             {
-                throw new Exception("Error creating employee."); // Error handled by caller
+                throw new Exception("Error creating employee.", ex);
             }
         }
 
-        // Updates an existing employee, returns true if updated successfully
+        // Updates an existing employee
         public async Task<bool> UpdateAsync(EmployeeUpdateDto dto)
         {
             try
             {
-                var employee = await _context.Employees.FindAsync(dto.Id); // Find record by ID
-                if (employee == null) return false; // Employee not found
+                var employee = await _context.Employees.FindAsync(dto.Id);
+                if (employee == null) return false;
 
                 employee.Name = dto.Name;
                 employee.Position = dto.Position;
                 employee.Salary = dto.Salary;
+                employee.Document = dto.Document;
 
-                await _context.SaveChangesAsync(); // Saves modifications
+                await _context.SaveChangesAsync();
                 return true;
             }
-            catch
+            catch (Exception)
             {
-                return false; // Update failed
+                return false;
             }
         }
 
-        // Deletes an employee by ID, returns true if removed successfully
+        // Deletes an employee by ID
         public async Task<bool> DeleteAsync(int id)
         {
             try
             {
-                var employee = await _context.Employees.FindAsync(id); // Locate employee
-                if (employee == null) return false; // If it does not exist -> false
+                var employee = await _context.Employees.FindAsync(id);
+                if (employee == null) return false;
 
-                _context.Employees.Remove(employee); // Deletes record
-                await _context.SaveChangesAsync(); // Apply to database
+                _context.Employees.Remove(employee);
+                await _context.SaveChangesAsync();
                 return true;
             }
-            catch
+            catch (Exception)
             {
-                return false; // Failed delete attempt
+                return false;
             }
         }
     }
